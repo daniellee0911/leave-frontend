@@ -1,6 +1,12 @@
 <script setup>
 
+import { useUserStore } from '../stores/user'
 
+const user = useUserStore()
+
+const logout = () => {
+    user.logout()
+}
 
 </script>
 
@@ -12,11 +18,11 @@
         </div>
         <div  class="flex items-center space-x-8">
  
-            <div>Hi, xxx</div>
+            <div>Hi, {{ user.getPersonalUserData().name }}</div>
 
-            <RouterLink class="hover:bg-gray-300"  to="/">Home</RouterLink>
-            <RouterLink class="hover:bg-gray-300"  to="/admin">假單管理</RouterLink>           
-            <button class="hover:bg-gray-300" >Logout</button>
+            <RouterLink class="hover:bg-gray-300" v-if="user.isAdminPerson()" to="/">Home</RouterLink>
+            <RouterLink class="hover:bg-gray-300" v-if="user.isAdminPerson()" to="/admin">假單管理</RouterLink>           
+            <button class="hover:bg-gray-300" @click="logout">Logout</button>
         </div>
        
 
